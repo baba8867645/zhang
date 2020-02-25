@@ -1,6 +1,6 @@
 package com.mi.zhang.algorithm;
 
-import android.text.TextUtils;
+import java.util.Arrays;
 
 /**
  * 正则表达式匹配
@@ -49,59 +49,71 @@ import android.text.TextUtils;
 public class Algorithm4 {
 
     public static void main(String[] args) {
-        System.out.println(new Algorithm4().isMatch("aaa", "a*"));
+        System.out.println(new Algorithm4().isMatch("aaa", "aab*a*c*a"));
     }
 
-//    public boolean isMatch(String text, String pattern) {
-//        if (pattern.isEmpty()) return text.isEmpty();
-//        boolean first_match = (!text.isEmpty() &&
-//                (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.'));
+    private boolean isMatch(String text, String pattern) {
+        if (pattern.isEmpty()) return text.isEmpty();
+        boolean first_match = (!text.isEmpty() &&
+                (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.'));
+
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
+            return (isMatch(text, pattern.substring(2)) ||
+                    (first_match && isMatch(text.substring(1), pattern)));
+        } else {
+            return first_match && isMatch(text.substring(1), pattern.substring(1));
+        }
+    }
+
+//    private boolean isMatch(String s, String p) {
+//        if (isEmpty(p)) return isEmpty(s);
 //
-//        if (pattern.length() >= 2 && pattern.charAt(1) == '*'){
-//            return (isMatch(text, pattern.substring(2)) ||
-//                    (first_match && isMatch(text.substring(1), pattern)));
-//        } else {
-//            return first_match && isMatch(text.substring(1), pattern.substring(1));
+//        int matchLen = s.length();
+//        String[] arr = p.split("\\*");
+//        for (String pattern : arr) {
+//
 //        }
 //    }
 
-    private boolean isMatch(String s, String p) {
-        if (isEmpty(s) && isEmpty(p)) {
-            return true;
-        } else if (isEmpty(s)) {
-            return false;
-        } else if (isEmpty(p)) {
-            return false;
-        } else if (!p.contains(".") && !p.contains("*")) {
-            return s.equals(p);
-        } else {
-            return innerMatch(s, p, 0, 0);
-        }
-    }
-
-    private boolean innerMatch(String s, String p, int matchIndexS, int startIndexP) {
-        if (startIndexP >= p.length()) {
-            startIndexP = p.length() - 1;
-        }
-        char matchS = s.charAt(matchIndexS);
-        for (int pIndex = startIndexP; pIndex < p.length(); pIndex++) {
-            if (matchS == p.charAt(pIndex)) {
-                return innerMatch(s, p, ++matchIndexS, ++pIndex);
-            } else if (p.charAt(pIndex) == '.') {
-                return innerMatch(s, p, ++matchIndexS, ++pIndex);
-            } else if (p.charAt(pIndex) == '*') {
-                if (pIndex > 0) {
-                    if (p.charAt(--pIndex) == matchS) {
-                        return innerMatch(s, p, ++matchIndexS, ++pIndex);
-                    }
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        return false;
-    }
+//    private boolean isMatch(String s, String p) {
+//        if (isEmpty(s) && isEmpty(p)) {
+//            return true;
+//        } else if (isEmpty(s)) {
+//            return false;
+//        } else if (isEmpty(p)) {
+//            return false;
+//        } else if (!p.contains(".") && !p.contains("*")) {
+//            return s.equals(p);
+//        } else {
+//            return innerMatch(s, p);
+//        }
+//    }
+//
+//    private boolean innerMatch(String s, String p) {
+//        if (isEmpty(p)) {
+//            return isEmpty(s);
+//        }
+//
+//        char matchS = s.charAt(0);
+//        for (int pIndex = 0; pIndex < p.length(); pIndex++) {
+//            if (matchS == p.charAt(pIndex)) {
+//                return innerMatch(s.substring(1), p.substring(1));
+//            } else if (p.charAt(pIndex) == '.') {
+//                return innerMatch(s.substring(1), p.substring(1));
+//            } else if (p.charAt(pIndex) == '*') {
+//                if (pIndex > 0) {
+//                    int lastIndexP = pIndex - 1;
+//                    if (p.charAt(lastIndexP) == '.') {
+//                        return innerMatch(s.substring(1), p.substring(1));
+//                    } else if (p.charAt(lastIndexP) == matchS) {
+//                        return innerMatch(s.substring(1), p.substring(1));
+//                    }
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
 
     private boolean isEmpty(String str) {
         return str == null || str.isEmpty();
