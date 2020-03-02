@@ -71,56 +71,6 @@ public class Algorithm4 {
         }
     }
 
-//    private boolean isMatch(String s, String p) {
-//        if (isEmpty(p)) return isEmpty(s);
-//
-//        int matchLen = s.length();
-//        String[] arr = p.split("\\*");
-//        for (String pattern : arr) {
-//
-//        }
-//    }
-
-//    private boolean isMatch(String s, String p) {
-//        if (isEmpty(s) && isEmpty(p)) {
-//            return true;
-//        } else if (isEmpty(s)) {
-//            return false;
-//        } else if (isEmpty(p)) {
-//            return false;
-//        } else if (!p.contains(".") && !p.contains("*")) {
-//            return s.equals(p);
-//        } else {
-//            return innerMatch(s, p);
-//        }
-//    }
-//
-//    private boolean innerMatch(String s, String p) {
-//        if (isEmpty(p)) {
-//            return isEmpty(s);
-//        }
-//
-//        char matchS = s.charAt(0);
-//        for (int pIndex = 0; pIndex < p.length(); pIndex++) {
-//            if (matchS == p.charAt(pIndex)) {
-//                return innerMatch(s.substring(1), p.substring(1));
-//            } else if (p.charAt(pIndex) == '.') {
-//                return innerMatch(s.substring(1), p.substring(1));
-//            } else if (p.charAt(pIndex) == '*') {
-//                if (pIndex > 0) {
-//                    int lastIndexP = pIndex - 1;
-//                    if (p.charAt(lastIndexP) == '.') {
-//                        return innerMatch(s.substring(1), p.substring(1));
-//                    } else if (p.charAt(lastIndexP) == matchS) {
-//                        return innerMatch(s.substring(1), p.substring(1));
-//                    }
-//                }
-//            }
-//        }
-//
-//        return false;
-//    }
-
     private boolean isEmpty(String str) {
         return str == null || str.isEmpty();
     }
